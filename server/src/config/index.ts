@@ -1,4 +1,4 @@
-// import { resolve, join } from 'path'
+import { resolve, join } from 'path';
 
 // @nestjs/config库的配置
 
@@ -11,6 +11,10 @@ export default () => ({
     username: 'root',
     password: 'root',
     database: 'moonlite_blog_db',
+    cache: {
+      duration: 500, // 500ms
+    },
+    timezone: '+0', // 设置时区
     // 这路径不能写错了，这里是按照当前路径config文件夹的上一级，也就是src文件夹下的，所有以.entity.{ts,js}为后缀名的文件
     // entities: [join(__dirname, '../', '**/*.entity.{ts,js}')],
     // entities: [join(__dirname, '..', '**/*.entity.{ts,js}')],

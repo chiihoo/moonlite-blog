@@ -1,32 +1,27 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Get,
   Post,
   Query,
-  Request,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UsersCreateOneDto, UsersGetOneDto } from 'src/dtos/users';
-import { IHttpData } from 'src/interfaces';
 import { UsersService } from './users.service';
 
 @Controller('users')
+@UseGuards(AuthGuard('jwt'))
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(AuthGuard('jwt'))
   @Get()
-  getUser(
-    @Query('username') username: string,
-  ): Promise<IHttpData<UsersGetOneDto>> {
+  getUser(@Query('username') username: string): Promise<UsersGetOneDto> {
     return this.usersService.findOneByUsername(username);
   }
 
   @Post()
-  createOne(@Query() dto: UsersCreateOneDto): Promise<IHttpData<any>> {
+  createOne(@Body() dto: UsersCreateOneDto) {
     return this.usersService.createOne(dto);
   }
 }

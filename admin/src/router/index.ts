@@ -6,12 +6,45 @@ declare module 'vue-router' {
   }
 }
 
-const Login = () => import('../views/login/login.vue')
-const Home = () => import('../views/home/home.vue')
-
 const routes: Array<RouteRecordRaw> = [
-  { path: '/login', component: Login },
-  { path: '/', component: Home, meta: { requiresAuth: true } }
+  {
+    path: '/login',
+    component: () => import('../views/login/login.vue')
+  },
+  {
+    path: '/',
+    component: () => import('../views/main/main.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '/articles',
+        component: () => import('../views/articles/articles.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: '/categories',
+        component: () => import('../views/categories/categories.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: '/categories/create',
+        component: () => import('../views/categories/categories-create.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: '/categories/create/:id',
+        component: () => import('../views/categories/categories-create.vue'),
+        meta: { requiresAuth: true },
+        props: true
+      },
+      {
+        path: '/categories/edit/:id',
+        component: () => import('../views/categories/categories-edit.vue'),
+        meta: { requiresAuth: true },
+        props: true
+      }
+    ]
+  }
 ]
 
 const router = createRouter({

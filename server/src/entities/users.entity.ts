@@ -1,9 +1,11 @@
 import {
   Column,
   CreateDateColumn,
+  // CreateDateColumn,
   Entity,
   PrimaryColumn,
-  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  // PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity({ name: 'users' })
@@ -26,9 +28,9 @@ export class UsersEntity {
   @Column({ nullable: true })
   avatar?: string | null;
 
-  @Column({ type: 'double' })
-  createTime: number;
+  @CreateDateColumn()
+  createDate?: Date;
 
-  // @CreateDateColumn()
-  // time: string;
+  @UpdateDateColumn()
+  updateDate?: Date;
 }

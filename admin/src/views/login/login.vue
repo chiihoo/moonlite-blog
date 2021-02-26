@@ -6,13 +6,7 @@
           <p class="title">Moonlite控制台</p>
           <p class="welcome">欢迎回来，请登录</p>
           <div class="grid-content">
-            <el-form
-              :model="loginData"
-              :rules="rules"
-              hide-required-asterisk="false"
-              status-icon="true"
-              ref="formRef"
-            >
+            <el-form :model="loginData" :rules="rules" :status-icon="true" ref="formRef">
               <el-row :gutter="20">
                 <el-col :xs="24" :sm="12">
                   <el-form-item label="账号" prop="username">
@@ -25,6 +19,7 @@
                       placeholder="请输入密码"
                       v-model="loginData.password"
                       show-password
+                      @keyup.enter="onSubmit('loginData')"
                     ></el-input>
                   </el-form-item>
                 </el-col>
@@ -46,11 +41,13 @@
 import { defineComponent, reactive, ref } from 'vue'
 import { fetchLogin } from '@/api'
 import { ElMessage } from 'element-plus'
-import router from '@/router'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Login',
   setup() {
+    const router = useRouter()
+
     const formRef = ref<HTMLElement | null>(null)
 
     const loginData = reactive({
@@ -74,21 +71,17 @@ export default defineComponent({
         (formRef.value as any).validate(async (valid: boolean) => {
           if (valid) {
             let res = await fetchLogin(loginData.username, loginData.password)
-            if ('error' in res) {
-              // 用户名或密码错误
-              ElMessage({
-                type: 'error',
-                center: true,
-                showClose: true,
-                message: res.error?.message
-              })
-              loginData.username = ''
-              loginData.password = ''
-              return
-            }
+            loginData.username = ''
+            loginData.password = ''
             // 存储jwt
-            ElMessage({ type: 'success', center: true, showClose: true, message: '登录成功' })
-            localStorage.setItem('access_token', res.data?.access_token)
+            ElMessage({
+              type: 'success',
+              center: true,
+              showClose: true,
+              duration: 1000,
+              message: '登录成功'
+            })
+            localStorage.setItem('access_token', res.access_token)
             router.push('/')
           }
         })

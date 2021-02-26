@@ -7,5 +7,7 @@ export class UsersGetOneDto {
 
   avatar?: string;
 
-  createTime: number;
+  createDate?: Date;
+
+  updateDate?: Date;
 }

@@ -1,4 +1,6 @@
+import router from '@/router'
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:3005'
@@ -7,11 +9,13 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   config => {
     if (localStorage.access_token) {
-      config.headers.Authorization = 'Bearer' + localStorage.getItem('access_token')
+      config.headers.Authorization = 'Bearer ' + localStorage.getItem('access_token')
     }
     return config
   },
   err => {
+    console.log('error', err)
+
     return Promise.reject(err)
   }
 )
@@ -21,6 +25,18 @@ axiosInstance.interceptors.response.use(
     return res.data
   },
   err => {
+    // 'Unauthorized'登录失效或者未登录
+    if (err.response?.status === 401) {
+      router.push('/login')
+    }
+    err.response?.data?.error &&
+      ElMessage({
+        type: 'error',
+        center: true,
+        showClose: true,
+        duration: 1000,
+        message: err.response.data.error
+      })
     return Promise.reject(err)
   }
 )

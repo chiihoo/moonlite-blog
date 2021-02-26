@@ -1,5 +1,5 @@
-import { Controller, Post, Query } from '@nestjs/common';
-import { IHttpData, ILoginInfo } from 'src/interfaces';
+import { Body, Controller, HttpException, Post } from '@nestjs/common';
+import { ILoginInfo } from 'src/interfaces';
 import { AuthService } from './auth.service';
 
 interface Ilogin {
@@ -12,13 +12,18 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  async login(@Query() query: Ilogin): Promise<IHttpData<ILoginInfo>> {
-    const { username, password } = query;
+  async login(@Body() body: Ilogin): Promise<ILoginInfo> {
+    const { username, password } = body;
     const user = await this.authService.validateUser(username, password);
     if (user) {
       const data = await this.authService.signToken(user);
-      return { data };
+      return data;
     }
-    return { error: { code: 401, message: '用户名或密码错误' } };
+    throw new HttpException(
+      {
+        error: '用户名或密码错误',
+      },
+      401,
+    );
   }
 }
