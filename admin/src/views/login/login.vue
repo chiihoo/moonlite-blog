@@ -82,7 +82,7 @@ export default defineComponent({
               message: '登录成功'
             })
             localStorage.setItem('access_token', res.access_token)
-            router.push('/')
+            router.push('/articles')
           }
         })
     }

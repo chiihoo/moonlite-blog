@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UsersEntity } from 'src/entities/users.entity';
+import { UsersEntity } from 'src/entities';
 import { UsersCreateOneDto, UsersGetOneDto } from 'src/dtos/users';
 import { customAlphabet } from 'nanoid';
 import * as bcrypt from 'bcryptjs';
@@ -44,7 +44,6 @@ export class UsersService {
       ...dto,
       password,
       id: customAlphabet('1234567890', 16)(),
-      createTime: new Date().getTime(),
     });
   }
 }

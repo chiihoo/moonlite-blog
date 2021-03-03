@@ -36,7 +36,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref, shallowRef } from 'vue'
 import { fetchCategoriesTree, fetchCategoriesIsNameVaild, fetchCategoriesCreate } from '@/api'
-import { ICreatOneData, IOptions } from '@/interfaces'
+import { ICreatOneCategory, IOptions } from '@/interfaces'
 import { findRouteFromTreeByValue, formatCategoriesTree } from '@/utils/tools'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
@@ -49,7 +49,7 @@ export default defineComponent({
 
     const formRef = ref<HTMLElement | null>(null)
 
-    const formData = reactive<ICreatOneData>({
+    const formData = reactive<ICreatOneCategory>({
       parentIdArr: null, // null或长度大于0的数组
       name: ''
     })
@@ -132,7 +132,6 @@ export default defineComponent({
         (formRef.value as any).validate(async (valid: boolean) => {
           if (valid) {
             let parentId = formData.parentIdArr?.[formData.parentIdArr.length - 1] || null
-            console.log(formData.name, parentId)
             await fetchCategoriesCreate(formData.name, parentId)
             ElMessage({
               type: 'success',

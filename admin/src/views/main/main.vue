@@ -4,25 +4,23 @@
       <h1 class="title">Moonlite控制台</h1>
       <el-menu :default-openeds="['1']" router>
         <el-submenu index="1">
-          <template #title><i class="el-icon-s-order"></i>内容管理</template>
+          <template #title><i class="el-icon-document"></i>内容管理</template>
           <el-menu-item index="/articles"><i class="el-icon-arrow-right"></i>文章</el-menu-item>
           <el-menu-item index="/categories"><i class="el-icon-arrow-right"></i>分类</el-menu-item>
         </el-submenu>
-        <el-submenu index="2">
-          <template #title><i class="el-icon-user-solid"></i>用户管理</template>
-          <el-menu-item index="/users"><i class="el-icon-arrow-right"></i>用户</el-menu-item>
-        </el-submenu>
-        <el-submenu index="3">
-          <template #title><i class="el-icon-s-comment"></i>评论管理</template>
-          <el-menu-item index="/comments"><i class="el-icon-arrow-right"></i>评论</el-menu-item>
-        </el-submenu>
-        <el-submenu index="4">
-          <template #title><i class="el-icon-s-flag"></i>广告管理</template>
-          <el-menu-item index="/advertisements"
-            ><i class="el-icon-arrow-right"></i>广告</el-menu-item
-          >
-        </el-submenu>
       </el-menu>
+      <div class="setting">
+        <el-popover placement="top" trigger="click" v-model:visible="visible">
+          <p>确认登出吗？</p>
+          <div style="text-align: right; margin: 0">
+            <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+            <el-button type="primary" size="mini" @click="handleLogout">确定</el-button>
+          </div>
+          <template #reference>
+            <el-button icon="el-icon-lock" circle></el-button>
+          </template>
+        </el-popover>
+      </div>
     </el-aside>
     <el-main>
       <router-view />
@@ -31,11 +29,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Main',
-  setup() {}
+  setup() {
+    const router = useRouter()
+
+    const visible = ref<boolean>(false)
+
+    const handleLogout = () => {
+      localStorage.removeItem('access_token')
+      router.push('/login')
+    }
+
+    return { visible, handleLogout }
+  }
 })
 </script>
 
@@ -43,6 +53,7 @@ export default defineComponent({
 .el-container {
   height: 100%;
   .el-aside {
+    position: relative;
     h1.title {
       margin: 35px 0;
       text-align: center;
@@ -53,6 +64,19 @@ export default defineComponent({
       height: calc(100% - 95px);
       &:hover {
         overflow: auto;
+      }
+    }
+    .setting {
+      z-index: 99;
+      position: absolute;
+      bottom: 0px;
+      left: 0;
+      right: 0;
+      background-color: rgba(246, 251, 254, 0.35);
+      text-align: center;
+      padding: 10px 0;
+      :deep(i) {
+        font-size: 30px;
       }
     }
   }

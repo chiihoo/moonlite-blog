@@ -3,7 +3,10 @@ import axios from 'axios'
 import { ElMessage } from 'element-plus'
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3005'
+  baseURL:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3005'
+      : 'http://121.196.155.101:5000/api'
 })
 
 axiosInstance.interceptors.request.use(
@@ -15,7 +18,6 @@ axiosInstance.interceptors.request.use(
   },
   err => {
     console.log('error', err)
-
     return Promise.reject(err)
   }
 )

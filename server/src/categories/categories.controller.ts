@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -25,22 +26,22 @@ export class CategoriesController {
     return this.categoriesService.getTree();
   }
 
-  @Get('/one')
+  @Get()
   getCategoriesById(@Query('id') id: string) {
     return this.categoriesService.getCategoriesById(id);
   }
 
-  @Post('/create')
+  @Post()
   createOne(@Body() dto: CategoriesCreateOneDto) {
     return this.categoriesService.createOne(dto);
   }
 
-  @Post('/edit')
+  @Put()
   editOne(@Body() dto: CategoriesEditOneDto) {
     return this.categoriesService.editOne(dto);
   }
 
-  @Delete('/delete')
+  @Delete()
   deleteOne(@Query('id') id: string) {
     return this.categoriesService.deleteOne(id);
   }

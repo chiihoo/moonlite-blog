@@ -1,4 +1,4 @@
-export interface ICreatOneData {
+export interface ICreatOneCategory {
   parentIdArr: string[] | null
   name: string
 }

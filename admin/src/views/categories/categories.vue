@@ -40,18 +40,15 @@ export default {
     }
   },
   methods: {
-    handleDragEnd(draggingNode: any, dropNode: { label: any }, dropType: any, ev: any) {
-      console.log('tree drag end: ', dropNode && dropNode.label, dropType)
-    },
     append(data: ICategoriesTree) {
       this.$router.push(`/categories/create/${data.id}`)
     },
+
     edit(data: ICategoriesTree) {
       this.$router.push(`/categories/edit/${data.id}`)
     },
 
     remove(node: any, data: ICategoriesTree) {
-      console.log('node', node)
       ;(this as any)
         .$confirm('此操作将删除该分类以及下级分类, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -71,6 +68,7 @@ export default {
         })
         .catch(() => {})
     },
+
     async fetchData() {
       this.loading = true
       const res = await fetchCategoriesTree()

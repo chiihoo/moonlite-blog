@@ -17,11 +17,6 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true },
     children: [
       {
-        path: '/articles',
-        component: () => import('../views/articles/articles.vue'),
-        meta: { requiresAuth: true }
-      },
-      {
         path: '/categories',
         component: () => import('../views/categories/categories.vue'),
         meta: { requiresAuth: true }
@@ -40,6 +35,29 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/categories/edit/:id',
         component: () => import('../views/categories/categories-edit.vue'),
+        meta: { requiresAuth: true },
+        props: true
+      },
+      {
+        path: '/articles',
+        component: () => import('../views/articles/articles.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: '/articles/create',
+        component: () => import('../views/articles/articles-create.vue'),
+        meta: { requiresAuth: true },
+        props: true
+      },
+      {
+        path: '/articles/create/:id',
+        component: () => import('../views/articles/articles-create.vue'),
+        meta: { requiresAuth: true },
+        props: true
+      },
+      {
+        path: '/articles/edit/:id',
+        component: () => import('../views/articles/articles-edit.vue'),
         meta: { requiresAuth: true },
         props: true
       }

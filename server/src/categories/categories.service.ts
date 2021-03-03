@@ -6,7 +6,7 @@ import {
   CategoriesEditOneDto,
   CategoriesIsNameVaildDto,
 } from 'src/dtos/categories';
-import { CategoriesEntity } from 'src/entities/categories.entity';
+import { CategoriesEntity } from 'src/entities';
 import { getManager, Repository } from 'typeorm';
 
 @Injectable()

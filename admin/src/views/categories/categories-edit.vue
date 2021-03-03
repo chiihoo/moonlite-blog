@@ -41,7 +41,7 @@ import {
   fetchCategoryById,
   fetchCategoriesEdit
 } from '@/api'
-import { ICreatOneData, IOptions } from '@/interfaces'
+import { ICreatOneCategory, IOptions } from '@/interfaces'
 import { findRouteFromTreeByValue, formatCategoriesTree } from '@/utils/tools'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
@@ -54,7 +54,7 @@ export default defineComponent({
 
     const formRef = ref<HTMLElement | null>(null)
 
-    const formData = reactive<ICreatOneData>({
+    const formData = reactive<ICreatOneCategory>({
       parentIdArr: null, // null或长度大于0的数组
       name: ''
     })
