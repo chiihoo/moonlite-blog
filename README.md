@@ -1,4 +1,4 @@
-# moonlite-blog后台管理系统
+# moonlite-blog 后台管理系统
 
 <p>
   <img src="https://img.shields.io/badge/vue3-3.0.5-brightgreen" alt="vue3">
@@ -29,7 +29,7 @@
 
 
 
-后端使用 **`NestJS`** 框架与 **`MySQL`** 数据库，并以 **`TypeOrm`** 进行数据库操作，实现了以下功能：
+后端使用 **`NestJS`** 框架与 **`MySQL`** 数据库，并以 **`TypeORM`** 进行数据库操作，实现了以下功能：
 
 * 登录鉴权模块
 * 用户模块
