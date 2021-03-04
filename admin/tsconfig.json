@@ -13,6 +13,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
+    },
+    "optimizeDeps": {
+      "include": ["@kangc/v-md-editor/lib/theme/vuepress.js"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]

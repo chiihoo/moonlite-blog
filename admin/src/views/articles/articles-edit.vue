@@ -30,6 +30,7 @@
           <el-upload
             class="avatar-uploader"
             :action="baseURL + '/upload'"
+            :headers="getAuthHeader()"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -39,7 +40,7 @@
           </el-upload>
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <TEditor ref="editor" v-model="formData.content" />
+          <v-md-editor v-model="formData.content" height="400px"></v-md-editor>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">更新</el-button>
@@ -51,7 +52,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref, shallowRef } from 'vue'
-import TEditor from '@/components/TEditor.vue'
 import { ElMessage } from 'element-plus'
 import axios from '@/utils/axios'
 import { fetchArticleById, fetchArticlesEdit, fetchCategoriesTree } from '@/api'
@@ -62,7 +62,6 @@ import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'ArticlesEdit',
   props: { id: String },
-  components: { TEditor },
   setup(props) {
     const router = useRouter()
 
@@ -85,6 +84,10 @@ export default defineComponent({
         { max: 100, message: '长度最多100个字符', trigger: 'blur' }
       ],
       content: [{ required: true, message: '请输入内容', trigger: 'blur' }]
+    }
+
+    const getAuthHeader = () => {
+      return { Authorization: ` Bearer ${localStorage.access_token}` }
     }
 
     const handleAvatarSuccess = (res: string) => {
@@ -160,7 +163,8 @@ export default defineComponent({
       handleAvatarSuccess,
       beforeAvatarUpload,
       baseURL,
-      options
+      options,
+      getAuthHeader
     }
   }
 })

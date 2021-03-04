@@ -2,7 +2,7 @@
   <el-container>
     <el-aside width="250px">
       <h1 class="title">Moonlite控制台</h1>
-      <el-menu :default-openeds="['1']" router>
+      <el-menu :default-openeds="['1']" :default-active="route.path" router>
         <el-submenu index="1">
           <template #title><i class="el-icon-document"></i>内容管理</template>
           <el-menu-item index="/articles"><i class="el-icon-arrow-right"></i>文章</el-menu-item>
@@ -30,12 +30,13 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'Main',
   setup() {
     const router = useRouter()
+    const route = useRoute()
 
     const visible = ref<boolean>(false)
 
@@ -44,7 +45,7 @@ export default defineComponent({
       router.push('/login')
     }
 
-    return { visible, handleLogout }
+    return { visible, handleLogout, route }
   }
 })
 </script>
