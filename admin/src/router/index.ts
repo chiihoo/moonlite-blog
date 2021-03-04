@@ -14,6 +14,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     component: () => import('../views/main/main.vue'),
+    redirect:'/articles',
     meta: { requiresAuth: true },
     children: [
       {
