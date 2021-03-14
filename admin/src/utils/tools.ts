@@ -12,10 +12,10 @@ export function formatCategoriesTree(list: Array<ICategoriesTree>) {
         } else if (key === 'name') {
           obj['label'] = obj[key]
         } else if (key === 'children') {
-          if (obj[key]?.length === 0) {
-            obj[key] = null
-          } else {
+          if (obj[key] && obj[key]!.length > 0) {
             helper(obj[key] as Array<ICategoriesTree>)
+          } else {
+            obj[key] = null
           }
         }
       })
