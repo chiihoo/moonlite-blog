@@ -3,9 +3,9 @@ import { ICategoriesTree } from '../interfaces'
 // 将获取到的树状结构，递归，将id复制为value，name复制成label
 export function formatCategoriesTree(list: Array<ICategoriesTree>) {
   const helper = (obj: Array<ICategoriesTree> | ICategoriesTree) => {
-    if (obj instanceof Array) {
+    if (Array.isArray(obj)) {
       obj.forEach(item => helper(item))
-    } else if (obj instanceof Object) {
+    } else if (typeof obj === 'object' && obj !== null) {
       Object.keys(obj).forEach(key => {
         if (key === 'id') {
           obj['value'] = '' + obj[key]
