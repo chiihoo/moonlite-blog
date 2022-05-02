@@ -32,6 +32,8 @@ export class UploadController {
       });
 
       ws.on('finish', () => {
+        // 部署的时候这个路径要换成真实的
+        // resolve(`http://121.196.155.101:5000/api/${filename}`);
         resolve(`http://localhost:3005/${filename}`);
       });
 
